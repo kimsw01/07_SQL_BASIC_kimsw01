@@ -48,7 +48,23 @@
 ~~~
 
 <!-- 새롭게 배운 내용을 자유롭게 정리해주세요.-->
+데이터는 보통 데이터베이스 테이블 등에 저장 (데이터베이스 안에 여러개의 테이블) -> MySQL, Oracle 등의 DB에 저장.
+저장된 데이터를 제품(앱, 웹)에서 사용
 
+SQL (Structured Query Language) - DB에서 데이터를 가지고 올 때 사용되는 언어.
+
+테이블 구조(엑셀, 스프레드시트와 유사) -> Row, Column (행(하나의 데이터)과 열(데이터의 특정 속성 값))
+
+MySQL, Oracle 등의 DB의 특징 -> OLTP (Online Transaction Processing)
+=> 거래 용도로 사용되는 DB (데이터의 무결성, 추가, 변경이 많이 발생하여 속도가 느림)
+=> 속도, 기능 부족으로 OLAP (Online Analytical Processing) 등장 (분석을 위한 기능 제공)
+DW (데이터 웨어하우스) - 데이터를 한 곳에 모아 저장
+
+BigQuery -> Google cloud의 OLAP + DW
+장점 1. 난이도 쉬움
+2. 속도가 빠름 (그러나 비용 발생)
+3. Firebase, Google Analytics 4의 데이터 쉽게 추출.
+4. 구글에서 인프라 관리 -> 서버 띄울 필요 없음.
 
 
 ## 2-1. 데이터 활용 Overview
@@ -60,7 +76,7 @@
 ~~~
 
 <!-- 새롭게 배운 내용을 자유롭게 정리해주세요.-->
-
+dd
 
 
 ## 2-2. 저장된 데이터 활용하기
