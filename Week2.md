@@ -169,11 +169,156 @@ WHERE
 
 <!-- 새롭게 배운 내용을 자유롭게 정리해주세요.-->
 
+# 집계 (GROUP BY)
 
+집계 => 데이터를 요약하는 과정
+
+집계하다 (모을 집, 계산할 계) => 모아서 계산하다
+
+계산
+
+- 더하기, 빼기
+- 최대값, 최소값
+- 평균
+- 갯수 세기
+
+GROUP BY : 같은 값끼리 모아서 그룹화한다.
+
+EX. 색상 기준으로 모은다 => GROUP BY
+
+특정 컬럼을 기준으로 모으면서 다른 컬럼에서는 집계 가능 (합, 평균, MAX, MIN 등)
+
+EX2. 타입을 기준으로 그룹하해서 "평균 공격력" 집계하기
+
++ 타입을 기준으로 그룹화해서 "타입 별 포켓몬 수" 집계하기
+
+=> 평균 공격력이 제일 높은 타입이 궁금한 경우
+- 평균 공격력 내림차순 (큰 것부터 작은 것으로 내려감)으로 정렬 (ORDER BY)
+
+=> 타입 당 포켓몬 수가 10마리 이상인 데이터만 추출하고 싶은 경우 (HAVING)
+
+# SQL로 표현해보기
+
+~~~
+SELECT
+ 집계할_컬럼1,
+ 집계함수(COUNT, MAX, MIN 등)
+FROM TABLE
+GROUP BY
+ 집계할_컬럼1
+
+* 집계할 컬럼을 SELECT에 명시하고
+GROUP BY 에 작성해줘야 함.
+~~~
+
+# 집계 함수 종류
+
+AVG, COUNT, COUNTIF, MAX, MIN, SUM, ...
+
+# DISTINCT : 고유값을 알고 싶은 경우
+
+DISTINCT의 뜻 : 별개의 여러 값 중에 UNIQUE 한 것만 보고 싶은 경우 사용
+
+EX) 1,2,3,3,4 -> 1,2,3,4 (중복을 제거하는 것)
+
+~~~
+SQL 쿼리
+
+SELECT
+ 집계할 컬럼,
+ COUNT(DISTINCT count할 컬럼)
+FROM Table
+GROUP BY
+ 집계할 컬럼
+~~~
+
+# 그룹화(집계) 활용 포인트
+
+데이터 분석하다가 그룹화하는 경우
+- 일자별 집계(원본 데이터는 특정 시간에 어떤 유저가 한 행동이 기록, 일자별로 집계)
+- 연령대별 집계 (특정연령대에서 더 많이 구매했는가?)
+- 특정 타입별 집계(특정 제품 타입을 많이 구매했는가?)
+- 앱 화면별 집계(어떤 화면에 유저가 많이 접근했는가?)
+
+...
+
+# 조건을 설정하고 싶은 경우 : WHERE, HAVING
+
+## WHERE - Table에 바로 조건을 설정하고 싶은 경우 사용
+
+Raw Data인 테이블 데이터에서 조건 설정
+
+~~~
+SELECT
+ 컬럼1, 컬럼2
+ COUNT(컬럼1) AS col1_count
+FROM Table
+WHERE
+ 컬럼1 >= 3
+~~~
+
+## HAVING - GROUP BY한 후 조건을 설정하고 싶은 경우 사용
+
+~~~
+SELECT
+ 컬럼1, 컬럼2,
+ COUNT(컬럼1) AS col1_count
+FROM Table
+GROUP BY 컬럼1, 컬럼2
+HAVING
+ col1_count > 3
+~~~
+
+# 서브 쿼리
+
+- SELECT 문 안에 존재하는 SELECT 쿼리
+- FROM 절에 또 다른 SELECT 문을 넣을 수 있음
+- 괄호로 묶어서 사용
+
+서브 쿼리를 작성하고, 서브 쿼리 바깥에서 WHERE 조건 설정하는 것
+
+= 서브 쿼리에서 HAVING으로 하는 것
+
+# 정렬하기 : ORDER BY
+
+~~~
+SELECT
+ col
+FROM
+ORDER BY <컬럼><순서>
+~~~
+
+- 순서 : DESC(내림차순), OSC(오름차순 - 보통 Default)
+
+order by는 쿼리의 맨 마지막(아래)에 두고,
+
+쿼리는 맨 마지막에만 작성하면 됨 (중간에 필요없음)
+
+# 출력 개수 제한하기 : LIMIT
+
+- 쿼리문의 결과 Row 수를 제한하고 싶은 경우 LIMIT 사용
+
+### 쿼리문의 제일 마지막에 작성
+
+~~~
+SELECT
+ col
+FROM Table
+LIMIT 1000
+~~~
+
+# 최종 정리
+
+- 집계하고 싶은 경우 : GROUP BY + 집계 함수 (AVG, MAX 등)
+- 고유값을 알고 싶은 경우 : DISTINCT
+- 조건을 설정하고 싶은 경우 : WHERE, HAVING
+- 정렬하고 싶은 경우 : ORDER BY
+- 출력 개수를 제한하고 싶은 경우 : LIMIT
+  
 
 # 2️⃣ 학습 인증란
 
-<!-- 이 글을 지우고, 여기에 학습한 것을 인증해주세요.-->
+
 
 
 
@@ -199,7 +344,13 @@ WHERE type = Electric;
 
 
 ~~~
-여기에 답을 작성해주세요!
+SELECT 부분에서는 name과 type을 구분하기 위해 쉼표를 사용해야 한다.
+FROM 데이터를 하고 나서 세미콜론이 있으면 안된다. (세미콜론은 쿼리를 끝내는 구문)
+WHERE 에서 type이 전기인 것을 추출하려고 하지만 Electric은 string 형식이기에 따옴표가 있어야 한다.
+
+SELECT name, type
+FROM pokemon
+WHERE type = 'Electric';
 ~~~
 
 
@@ -218,7 +369,12 @@ GROUP BY type;
 
 
 ~~~
-여기에 답을 작성해주세요.
+집계 후 조회하는 것이기 때문에, 집계하는 함수 GROUP BY가 FROM 다음으로 와야하고, WHERE이 아닌 HAVING 함수를 사용해야한다.
+
+SELECT type, AVG(attack) AS avg_attack
+FROM pokemon
+GROUP BY type
+HAVING AVG(attack) >= 60
 ~~~
 
 
