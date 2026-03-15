@@ -319,7 +319,7 @@ LIMIT 1000
 # 2️⃣ 학습 인증란
 
 
-![alt text](SQL2.jpg)
+![alt text](picture/SQL2.jpg)
 
 <br><br>
 
