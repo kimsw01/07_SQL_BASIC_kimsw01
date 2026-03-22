@@ -392,7 +392,7 @@ WHERE
 
 -> 이 부분을 개선하기 위해 생산성 도구를 활용
 
-<!-- 이어질 주차에서 생산성 도구를 활용한 실습이 있습니다.강의에 맞게 제작하여 화면을 캡쳐하여 이 주석을 지우고 올려주세요. -->
+![?](<picture/생산성 도구.png>)
 
 
 
@@ -403,8 +403,8 @@ WHERE
 
 # 2️⃣ 학습 인증란
 
-<!-- 이 글을 지우고, 여기에 학습한 것을 인증해주세요.-->
-
+![alt text](picture/학습1.png)
+![alt text](picture/학습2.png)
 
 
 <br><br>
@@ -441,7 +441,16 @@ ORDER BY (ㄱ) (ㄹ);
 
 
 ~~~
-여기에 답을 작성해주세요!
+SELECT 
+ type1,
+ AVG(attack) #평균 공격력
+FROM pokemon
+WHERE 
+ attack >= 50 # 조건이니까 WHERE
+GROUP BY
+ type1 # 각 타입별 공격력이므로 그룹화 GROUP BY
+ORDER BY
+ AVG(attack) DESC; # 평균 공격력을 기준으로 내림차순 이니까 DESC
 ~~~
 
 
