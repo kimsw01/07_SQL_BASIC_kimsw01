@@ -55,7 +55,119 @@
 ~~~
 
 <!-- 새롭게 배운 내용을 자유롭게 정리해주세요.-->
+### 오류의 정의 (Error)
 
+- '방황하다, 길을 잃다'라는 뜻의 라틴어에서 유해한 단어
+- 부정확하거나 잘못된 행동을 의미
+- 실수와 동의어인 경우도 있음
+
+### 오류 메세지가 알려주고자 하는 것
+
+- 현재 작성한 방식으로 하면 답을 얻을 수 없다 (길잡이 역할)
+- 이 부분이 문제가 있다 (문제 진단)
+
+### 오류를 바라보는 관점
+
+- 오류가 발생하면? -> 길잡이가 나를 더 좋은 길로 나아가게 하는구나
+- 좋은 길로 가는 법 -> **오류 메세지**를 보면서 진행하는 것!
+
+### 대표적인 오류 카테고리
+
+- 1.Syntax Error (SELECT list must not be empty at [3:1])
+-> 문법을 지키지 않아 생기는 오류
+- Error 메세지를 보고 번역 또는 해석한 후, 해결 방법 찾아보기
+-> 구글에 검색, AI에게 질문, 지인에게 질문 등
+ 
+~~~
+1 SELECT
+2
+3 FROM
+4 WHERE
+
+Syntax Error : SELECT list must not be empty at [3:1]
+# 오류 메세지 번역 : SELECT 목록은 [3:1]에서 비어있으면 안됩니다
+
+SELECT
+col => 이 부분이 비어있기에 생기는 오류
+FROM
+~~~
+
+- 2.Number of arguments does not match for aggregate function COUNT
+
+~~~
+SELECT
+ COUNT(id, kor_name)
+FROM basic.pokemon
+
+# 해석 : 집계 함수 COUNT의 인자 수가 일치하지 않습니다.
+
+COUNT(kor_name, eng_name) => X (count 안에는 인자가 하나밖에 들어갈 수 없음)
+~~~
+
+- 3.SELECT list awpression references column type1 a which is neither grouped nor aggregated
+
+~~~
+SELECT
+ type1,
+ COUNT(id) AS cnt
+FROM basic.pokemon
+
+# 해석 : SELECT 목록 식은 다음에서 그룹화되거나 집계되지 않은 열을 참조합니다.
+
+=> GROUP BY에 적절한 컬럼을 명시하지 않았을 경우 발생하는 오류
+~~~
+
+- 4.Syntax Error : Expected end of input but got keyword SELECT
+
+~~~
+SELECT
+ type1,
+ COUNT(id) AS cnt
+FROM basic.pokemon
+GROUP BY
+ type1
+
+SELECT
+*
+FROM basic.pokemon
+
+# 해석 : 입력이 끝날 것으로 예상되었지만 SELECT 키워드가 입력되었습니다.
+
+- SELECT 근처 확인하기
+- 하나의 쿼리엔 SELECT가 1개만 있어야 함
+- 혹은 쿼리가 끝나는 부분에 ; 붙이고 실팽할 부분만 드래그 앤 드랍해서 실행하기
+~~~
+
+- 5.Syntax error : Expected end of input but got keyword WHERE at [4:1]
+
+~~~
+1 SELECT
+2 *
+3 FROM basic.trainer LIMIT 10
+4 WHERE
+5 id =3
+
+# 해석 : 입력이 끝날 것으로 예상되었지만 [4:1]에서 키워드 WHERE을 얻었다.
+
+=> LIMIT은 항상 구문 마지막에 있어야 함. LIMIT 뒤에 WHERE이 와서 발생한 오류.
+~~~
+
+- 6.Syntax Error : Expected ")" but got end of script at [8:11]
+
+~~~
+1 SELECT
+2 name,
+3 FROM (
+4   SELECT
+5     *
+6   FROM basic.trainer
+7   WHERE
+8   id =3
+
+# 해석 : ")"가 예상되지만 [8:11]에 스크립트가 끝났습니다.
+
+=> 괄호를 작성하지 않은 경우. 괄호를 완성시켜주어야 함
+~~~
 
 
 ## 4-2. 데이터 타입과 데이터 변환(CAST, SAFE_CAST)
