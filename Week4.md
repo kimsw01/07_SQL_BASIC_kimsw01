@@ -179,7 +179,33 @@ FROM basic.pokemon
 ~~~
 
 <!-- 새롭게 배운 내용을 자유롭게 정리해주세요.-->
+### 데이터 타입
+- 숫자(정수), 문자(따옴표), 시간&날짜(Date), 부울(Bool, 참이나 거짓) ...
 
+### 데이터 타입이 중요한 이유
+
+- 보이는 것과 저장된 것의 차이가 존재
+
+  -> 엑셀에서 보면 빈 값 => NULL or "", 1 => 숫자 1 or 문자 1
+
+  -> 내 생각과 다른 경우 데이터의 타입을 서로 변경해야 함.
+
+### 자료 타입 변경하기 (CAST)
+
+```sql
+SELECT
+ CAST(1 AS STRING) # 숫자 1을 문자 1로 변경
+ ```
+
+- 더 안전하게 데이터 타입 변경하기 : SAFE_CAST
+- SAFE_ 가 붙은 함수는 변환이 실패할 경우 **NULL** 반환
+
+```sql
+SELECT
+ SAFE_CAST("SW" AS INT64)
+
+# 결과값 : NULL
+```
 
 
 ## 4-3. 문자열 함수(CONCAT, SPLIT, REPLACE, TRIM, UPPER)
@@ -191,6 +217,62 @@ FROM basic.pokemon
 
 <!-- 새롭게 배운 내용을 자유롭게 정리해주세요.-->
 
+- 문자열이란 ? ""로 묶인 것들. 
+- 문자열 데이터로 할 수 있는 대표적인 연산
+
+(붙이기, 분리하기, 수정하기, 자르기, 대문자 변환)
+
+### 문자열 붙이기 (CONCAT)
+```SQL
+SELECT
+ CONCAT("안녕", "하세요") AS result
+
+# FROM이 없어도 CONCAT은 직접 인자로 넣어줘서 실행 가능
+# result => 안녕하세요
+```
+
+### 문자열 분리하기 (SPLIT)
+```SQL
+SELECT
+ SPLIT("가, 나, 다", ", ") AS result
+
+# SPLIT(문자열_원본, 나눌 기준이 되는 문자)
+# RESULT => 가, 나, 다
+```
+
+### 특정 단어 수정하기 (REPLACE)
+```SQL
+SELECT
+ REPLACE("안녕", "바보", "천재") AS result
+
+# REPLACE(문자열 원본, 찾을 단어, 바꿀 단어)
+```
+### 문자열 자르기 (TRIM)
+```SQL
+SELECT
+ TRIM("안녕하세요", "하세요") AS result
+
+# TRIM(문자열 원본, 자를 단어)
+# result => 안녕
+```
+
+### 영어 소문자를 대문자로 변경 (UPPER)
+```SQL
+SELECT
+ UPPER("abc") AS result
+
+# result => ABC
+```
+
+### 정리
+
+| 연산 | Input | Output | 함수이름 |
+| --- | --- | --- | --- |
+| 문자열 붙이기 | "안녕"+"하세요" | "안녕하세요" | CONCAT |
+| 문자열 분리하기 | "가,나,다,라" | "가", "나", "다", "라" | SPLIT |
+| 특정 단어 수정하기 |"안녕하세요" | "실천하세요" | REPLACE |
+| 문자열 자르기 | "안녕하세요" | "안녕" | TRIM |
+| 영어 대문자 변환 | "abc" | "ABC" | UPPER |
 
 
 ## 4-4. 날짜 및 시간 데이터 이해하기(1) (타임존, UTC, Millisecond, TIMESTAMP/DATETIME)
@@ -204,7 +286,29 @@ FROM basic.pokemon
 
 <!-- 새롭게 배운 내용을 자유롭게 정리해주세요.-->
 
+### 날짜 및 시간 데이터의 핵심
 
+1. 날짜 및 시간 데이터 타입 파악하기 : DATE, DATETIME, TIMESTAMP
+2. 날짜 및 시간 데이터 관련 알면 좋은 내용 : UTC, Millisecond
+3. 날짜 및 시간 데이터 타입 변환하기
+4. 시간 함수 (두 시간의 차이, 특정 부분 추출하기)
+
+### 시간 데이터
+
+- DATE : DATE만 표시 (2026-03-29)
+- DATETIME : DATE와 TIME까지 표시, TIMEZONE 정보 없음 (2026-03-29 14:00:00)
+- TIME : TIME만 표시 (14:00:00)
+- 타임존 : GMT(그리니치 천문대 기준), UTC(국제적인 표준 시간)
+- TIMESTAMP : 시간 도장 (UTC부터 경과한 시간을 나타내는 값 - 타임존 정보 있음)
+- millisecond(ms) : 천분의 1초
+
+### 시간 데이터끼리의 변환
+- timestamp와 datetime
+
+|  | TIMESTAMP | DATETIME |
+| --- | --- | --- |
+| 타임존 | UTC라고 나옴 | T가 나옴(TIME을 의미) |
+| 시간 차이 | 한국 -9시간 | 한국 ZONE 사용시 한국 시간과 동일 |
 
 <br>
 
@@ -226,7 +330,7 @@ FROM basic.pokemon
 
 <!-- 문제를 풀기 위하여 로그인이  필요합니다. -->
 
-<!-- 정답을 맞추게 되면, 정답입니다. 라는 칸이 생성되는데 이 부분을 캡처해서 이 주석을 지우시고 첨부해주시면 됩니다. --> 
+![alt text](picture/WEEK4_Q.png)
 
 
 
@@ -248,7 +352,10 @@ WHERE CATEGORY = '인문'
 
 
 ~~~
-여기에 답을 작성해주세요!
+YEAR 함수의 인수가 원래는 1개인데 규서는 2개를 넣었음.
+
+원래는 YEAR(PUBLISHED_DATE, 2021)가 아니라
+YEAR(PUBLISHED_DATE) = 2021 이게 맞음.
 ~~~
 
 
