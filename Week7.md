@@ -352,10 +352,13 @@ SELECT
     p.ProductName, 
     od.Quantity, 
     od.UnitPrice  
-FROM Users u  
-JOIN Orders o ON u.id = o.userId
-JOIN OrderDetails od ON o.OrderID = od.orderID  
-JOIN Products p ON od.ProductID = p.ProductID
+FROM Users AS u  
+JOIN Orders AS o 
+ ON u.id = o.userId
+JOIN OrderDetails AS od 
+ ON o.OrderID = od.orderID  
+JOIN Products AS p 
+ ON od.ProductID = p.ProductID
 WHERE 
     u.region = 'Busan'        
 ORDER BY 
